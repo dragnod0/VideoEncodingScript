@@ -1,0 +1,60 @@
+# Read the filename from the source file and set it to the destination file. Works with one and multible file inside the same folder.
+# Syntax (for systemwide use) $ffmpeg-batch [source container] [target container] [path/from/sourceDIR] [path/to/destination]
+# for example: ffmpeg-batch avi mp4 /home/user/Movies /home/user/Movies/optimized
+# Important: Don't use "/" at path ending otherwise the script doesn't work! 
+
+srcExt=$1     #Source container (avi, flv, mkv, ...). The Script grap only files with this container. 
+destExt=$2    #Target container (mp4, mkv, ...)
+
+srcDir=$3     #Source folder
+destDir=$4    #Destination folder
+
+number=1
+
+# Options for ffmpeg with GPU encoding (the fallowing options are optimized for native HW decoding with Plesk)
+opts="-c:v hevc_vaapi -crf 20 -preset medium --profile main --level-idc 4.0 --high-tier -ac 6 -c:a aac -b:a 192k"
+
+# Grap the Source filename.
+for filename in "$srcDir"/*.$srcExt; do
+
+        basePath=${filename%.*}
+        baseName=${basePath##*/}
+
+# Checks whether the file already exists in the target folder. IMPORTANT: This checks only if the file exists. It can NOT continue an unfinished encoding!
+if [ -e "$destDir"/"$baseName"."$destExt" ] ; then
+        echo -e "\033[34m\033[1m>>>>> The file "$baseName"."$destExt" alredy exist in "$destDir"! Continue with next file <<<<<\033[0m"
+        return 0
+else
+
+# Create a file with chapter information for set it in the target video. 
+ffmpeg -i "$filename" -f ffmetadata /tmp/"$baseName".txt 
+
+# Search for the forced marked subtitle.
+echo -e "\033[32m\033[1m>>>>> Searching for the subtitle maked as forced <<<<<\033[0m"
+sleep 3
+subIndex=$(ffprobe -v 0 -select_streams s -show_entries stream=index:disposition=forced -of compact=nk=0 "$filename" | grep disposition:forced=1 | sed -ne 's#^stream|index=\([0-9]\+\)|.*$#\1#p')
+                
+        if [ -z $subIndex ] ; then 
+                        echo -e "\033[32m\033[1m>>>>> No forced subtitle present. <<<<<\033[0m"
+                else
+                        echo -e "\033[32m\033[1m>>>>> Select subtitle Track:"$subIndex" <<<<<\033[0m"
+        fi
+        
+                
+        if [ -z $subIndex ] ; then
+                        # Convert if no forced subtitle is present.
+                        echo -e "\033[32m\033[1m>>>>> Convert $filename. No forced subtitle present. <<<<<\033[0m"
+                        ffmpeg -y -loglevel error -stats -init_hw_device vaapi=foo:/dev/dri/renderD128 -hwaccel vaapi -hwaccel_output_format vaapi -hwaccel_device foo -i "$filename" -i /tmp/"$baseName".txt -map 0:0 -map 0:a:m:language:ger -map_metadata 1 -map_chapters 1 $opts "$destDir"/"$baseName"."$destExt"
+                else
+                        # Convert if forced subtitle is present.
+                        echo -e "\033[32m\033[1m>>>>> Convert $filename. A forced subtitle is present. <<<<<\033[0m"
+                        ffmpeg -y -loglevel error -stats -init_hw_device vaapi=foo:/dev/dri/renderD128 -hwaccel vaapi -hwaccel_output_format vaapi -hwaccel_device foo -i "$filename" -i /tmp/"$baseName".txt -map 0:0 -map 0:a:m:language:ger -map 0:$subIndex -map_metadata 1 -map_chapters 1 $opts "$destDir"/"$baseName"."$destExt"
+                fi
+        fi
+fi
+
+# Delete the Metadata file.
+rm -f /tmp/"$baseName".txt
+
+done
+
