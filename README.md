@@ -1,6 +1,6 @@
 # About
 These Bash scripts can convert multible files inside a single folder (not recursive) into another. It's grap the name from the source files and give the destitnation file the same name.
-The scripts are testet on debian and Ubuntu based Linux Distros.
+The scripts are testet on Debian and Ubuntu based Linux Distros.
 
 
 
