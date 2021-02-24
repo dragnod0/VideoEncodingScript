@@ -65,7 +65,7 @@ In this example the Script encode all mkv Videos into mp4 files. All other conta
 - assume the forced subtitle
 - Checks whether the file already exists in the target folder
 - easy change the HadBrakeCli encoding options
-- ***The script is costamized for german audio and subtitle tracks. You must change it with the ISO 639-2 code (e.g. fre, eng, spa, dut, et cetera)
+- ***The script is costamized for german audio and subtitle tracks. You must change it with the ISO 639-2 code (e.g. fre, eng, spa, dut, et cetera)***
 
 # FFMPEG vs. HandBrakeCli - The differences
 ### FFMPEG
