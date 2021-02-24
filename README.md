@@ -3,6 +3,7 @@ These Bash scripts can convert multible files inside a single folder (not recurs
 The scripts are testet on debian and Ubuntu based Linux Distros.
 
 
+
 # Requiments
 #### FFMPEG
 ##### Ubuntu & Debian based Distros:
@@ -21,9 +22,11 @@ sudo apt install handbrake-cli
 If you missing the ```add-apt-repository``` in Debian [see here](https://computingforgeeks.com/how-to-install-add-apt-repository-on-debian-ubuntu/) 
 
 
+
 # Installation
 1. Download or Copy the scripts into the /bin dir for system wide use.
 2. Make the scripts executable with ```sudo chmod +x /bin/[Filename]```
+
 
 
 # Syntax
@@ -35,6 +38,7 @@ In this example the Script encode all mkv Videos into mp4 files. All other conta
 
 ***Important: Don't use slash "/" at the end of the path. Otherwise the script does't work!***
 ***This is WRONG: /home/user/Movies/*** 
+
 
 
 # Features 
@@ -74,6 +78,7 @@ In this example the Script encode all mkv Videos into mp4 files. All other conta
 - makes the most features automatic 
 - has no GPU encoding Support 
 - has no support for more advanced options (thay are not documentet for CLI) 
+
 
 
 # FFMPEG or HandBrakeCli?
