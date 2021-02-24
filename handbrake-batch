@@ -11,7 +11,8 @@ destDir=$4    #Destination folder
 
 number=1
 
-# Options for HandBrakeCLI (the fallowing options are optimized for native HW decoding with Plesk)
+# Options for HandBrakeCLI (the fallowing options are optimized for native HW decoding with Plesk) the "und" paremeter behind --audio-lang-list is necessary to grap unknown audio tracks.
+# if only the unknown audio track present, wihout the "und" paremeter the encodet Video has no audio.
 opts="-f av_mp4 -m -O --align-av -e x265 --encoder-profile main --encoder-level 4.0 -q 20 --no-deinterlace -E ca_aac --ab 192k -6 --audio-lang-list ger,und --first-audio --subtitle-lang-list ger -F"
 
 # Grap the Source filename.
