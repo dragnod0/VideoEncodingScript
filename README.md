@@ -20,6 +20,7 @@ sudo apt install handbrake-cli
 ```
 If you missing the ```add-apt-repository``` in Debian [see here](https://computingforgeeks.com/how-to-install-add-apt-repository-on-debian-ubuntu/) 
 
+
 # Installation
 1. Download or Copy the scripts into the /bin dir for system wide use.
 2. Make the scripts executable with ```sudo chmod +x /bin/[Filename]```
