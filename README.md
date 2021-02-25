@@ -33,7 +33,7 @@ If you missing the ```add-apt-repository``` in Debian [see here](https://computi
 > [scriptname] [source  container] [destination container] [sorce directory] [destination directory] 
 
 An example:
-> ffmpeg-batch mkv mp4 /home/user/Movies /home/Movies/optimized
+```ffmpeg-batch mkv mp4 /home/user/Movies /home/Movies/optimized```
 In this example the Script encode all mkv Videos into mp4 files. All other containers will be ignored. 
 
 ***Important: Don't use slash "/" at the end of the path. Otherwise the script does't work!***
