@@ -86,4 +86,4 @@ In this example the Script encode all mkv Videos into mp4 files. All other conta
 
 # FFMPEG or HandBrakeCli?
 For most tasks and if you don't need support for GPU encoding HandBrakeCLI is the best option. 
-Only you will encode with your graphic card or need advanzed options you must use FFMPEG. 
+Only you will encode with your graphic card or need advanced options you must use FFMPEG. 
