@@ -30,7 +30,7 @@ If you missing the ```add-apt-repository``` in Debian [see here](https://computi
 
 
 # Syntax
-> [scriptname] [source  container] [destination container] [sorce directory] [destination directory] 
+``` [scriptname] [source  container] [destination container] [sorce directory] [destination directory] ```
 
 An example:
 ```ffmpeg-batch mkv mp4 /home/user/Movies /home/Movies/optimized```
