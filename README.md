@@ -68,7 +68,11 @@ In this example the Script encode all mkv Videos into mp4 files. All other conta
 - Checks whether the file already exists in the target folder
 - easy change the HadBrakeCli encoding options
 - encoded files are ready for native decode with Plex (if you use mp4 at output container)
-- ***The script is costamized for german audio and subtitle tracks. You must change it with the ISO 639-2 code (e.g. fre, eng, spa, dut, et cetera)***
+- ***The script is costamized for german audio and subtitle tracks. You must change it with the ISO 639-2 code (e.g. fre, eng, spa, dut,...)***
+
+#### hanbrake-batch-rm and ffmpeg-batch
+- do all what the original *-batch files do
+- after the encoding is finished, the source file will be deleted
 
 # FFMPEG vs. HandBrakeCli - The differences
 ### FFMPEG
