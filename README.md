@@ -12,7 +12,7 @@ sudo apt update
 sudo apt install ffmpeg
 ```
 
-#### HanBrakeCli
+#### HandBrakeCli
 ##### Ubuntu & Debian based Distros
 ```
 sudo add-apt-repository -y ppa:stebbins/handbrake-releases
