@@ -1,0 +1,33 @@
+# !/bin/bash
+# Read the filename from the source file and set it to the destination file. Works with one and multible file inside the same folder.
+# Syntax (for systemwide use) $ffmpeg-batch [source container] [target container] [path/from/sourceDIR] [path/to/destination]
+# for example: ffmpeg-batch avi mp4 /home/user/Movies /home/user/Movies/optimized
+# Important: Don't use "/" at path ending otherwise the script doesn't work! 
+
+srcExt=$1     #Source container (avi, flv, mkv, ...). The Script grap only files with this container. 
+destExt=$2    #Target container (mp4, mkv, ...)
+
+srcDir=$3     #Source folder
+destDir=$4    #Destination folder
+
+number=1
+
+# Options for HandBrakeCLI (the fallowing options are optimized for native HW decoding with Plesk)
+opts="-f av_mp4 -m -O --align-av -e x265 --encoder-profile main --encoder-level 4.0 -q 20 --no-deinterlace -E ca_aac --ab 192k -6 --audio-lang-list ger,und --first-audio --subtitle-lang-list ger -F"
+
+# Grap the Source filename.
+for filename in "$srcDir"/*.$srcExt; do
+
+        basePath=${filename%.*}
+        baseName=${basePath##*/}
+
+# Checks whether the file already exists in the target folder. IMPORTANT: This checks only if the file exists. It can NOT continue an unfinished encoding!
+if [ -e "$destDir"/"$baseName"."$destExt" ] ; then
+        echo -e "\033[34m\033[1m>>>>> The file "$baseName"."$destExt" alredy exist in "$destDir"! Continue with next file <<<<<\033[0m"
+        return 0
+else
+
+                        HandBrakeCLI $opts -i "$filename" -o "$destDir"/"$baseName"."$destExt"
+fi
+rm -f "$filename"
+done
