@@ -20,6 +20,12 @@ for filename in "$srcDir"/*.$srcExt; do
 
         basePath=${filename%.*}
         baseName=${basePath##*/}
+        
+# Check if the target folder exsist and create it if not.
+if [ ! -d "$destDir" ]
+then 
+	mkdir -p --mode=777 "$destDir"
+fi
 
 # Checks whether the file already exists in the target folder. IMPORTANT: This checks only if the file exists. It can NOT continue an unfinished encoding!
 if [ -e "$destDir"/"$baseName"."$destExt" ] ; then
